@@ -37,35 +37,35 @@ export default {
 } as Meta<typeof RRuleBuilder>;
 
 const Template: StoryFn<typeof RRuleBuilder> = (args) => {
-  const {
-    validateForm,
-    validationErrors,
-    buildRRuleString,
-    RRuleString,
-  } = useBuilderStore();
+  const { validateForm, validationErrors, buildRRuleString, RRuleString } =
+    useBuilderStore();
   const errors = Object.keys(validationErrors);
   return (
     <>
       <RRuleBuilder {...args} />
       <hr />
-      <Button onClick={() => {
-        validateForm();
-      }}
+      <Button
+        onClick={() => {
+          validateForm();
+        }}
       >
         Validate
       </Button>
-      {!errors.length ? <Typography color="info">Form is valid</Typography> : <Typography color="error">Form is invalid</Typography>}
-      {!errors.length && errors.map((key) => (
-        <Typography key={key} color="error">{validationErrors[key]}</Typography>
-      ))}
+      {!errors.length ? (
+        <Typography color="info">Form is valid</Typography>
+      ) : (
+        <Typography color="error">Form is invalid</Typography>
+      )}
+      {!errors.length &&
+        errors.map((key) => (
+          <Typography key={key} color="error">
+            {validationErrors[key]}
+          </Typography>
+        ))}
       <hr />
-      <Button onClick={buildRRuleString}>
-        Build String
-      </Button>
+      <Button onClick={buildRRuleString}>Build String</Button>
       {/*  pre-wrap shows the line break in the output */}
-      <Typography sx={{ whiteSpace: "pre-wrap" }}>
-        {RRuleString}
-      </Typography>
+      <Typography sx={{ whiteSpace: "pre-wrap" }}>{RRuleString}</Typography>
     </>
   );
 };
@@ -77,7 +77,7 @@ Primary.args = {
   },
   enableYearlyInterval: true,
   showStartDate: true,
-  dateAdapter: AdapterLuxon,
+  dateAdapter: Date,
 };
 
 const SmallTemplate: StoryFn<typeof RRuleBuilder> = (args) => (
@@ -104,7 +104,8 @@ const WithRRuleStringTemplate: StoryFn<typeof RRuleBuilder> = (args) => (
       {`Start string:\n${args.rruleString}`}
     </Typography>
     <Typography marginY={4}>
-      Important note: To have the date start in the same string you must have a \n after the start date for a new line before the RRULE.
+      Important note: To have the date start in the same string you must have a
+      \n after the start date for a new line before the RRULE.
     </Typography>
     <RRuleBuilder {...args} />
   </>
@@ -120,7 +121,8 @@ WithRRuleString.args = {
   // rruleString: "DTSTART:20240917T114341Z\nRRULE:INTERVAL=2;FREQ=WEEKLY;BYDAY=FR;COUNT=2",
   // *** rehydrate month with radio selected testing:
   // rruleString: "DTSTART:20240917T114341Z \n RRULE:BYMONTHDAY=11;INTERVAL=2;UNTIL=20290605T020600Z;FREQ=MONTHLY",
-  rruleString: "DTSTART:20251217T114341Z \n RRULE:BYSETPOS=2,-1;BYDAY=SA;INTERVAL=1.5;UNTIL=20290605T020600Z;FREQ=MONTHLY",
+  rruleString:
+    "DTSTART:20251217T114341Z \n RRULE:BYSETPOS=2,-1;BYDAY=SA;INTERVAL=1.5;UNTIL=20290605T020600Z;FREQ=MONTHLY",
   // *** rehydrate year with radio selected testing:
   // rruleString: "DTSTART:20240917T114341Z \n RRULE:BYMONTH=6;BYMONTHDAY=2;INTERVAL=1;UNTIL=20290605T020600Z;FREQ=YEARLY",
   // rruleString: "DTSTART:20240917T114341Z \n RRULE:BYMONTH=3;BYSETPOS=2;BYDAY=TU;INTERVAL=1;UNTIL=20290605T020600Z;FREQ=YEARLY",
